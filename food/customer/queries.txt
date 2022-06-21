@@ -1,0 +1,22 @@
+food_items.php 
+line 87
+    <a href="food_item.php?<?php echo "s_id=".$food_row["s_id"]."&f_id=".$food_row["f_id"]?>" class="btn btn-sm mt-3 btn-outline-secondary">
+line 71
+    <a href="food_items.php?<?php echo "food_id=".$food_row["s_id"]."&food_id=".$food_row["food_id"]?>" class="text-decoration-none text-dark">
+
+add_item.php
+line 45
+    else{
+            //Different shop
+            //Delete all items in cart from previous shop
+            $delelte_query = "DELETE FROM cart WHERE c_id = {$c_id}";
+            $delete_result = $mysqli -> query($delelte_query);
+            if($delete_result){
+                //Insert new item to cart of new shop
+                $insert_query = "INSERT INTO cart (c_id, s_id, f_id, ct_amount, ct_note) 
+                VALUES ({$c_id},{$s_id},{$f_id},{$amount},'{$request}')";
+                $atc_result = $mysqli -> query($insert_query);
+            }else{
+                $atc_result = false;
+            }
+        }
