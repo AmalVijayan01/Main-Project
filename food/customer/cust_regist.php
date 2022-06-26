@@ -12,9 +12,9 @@
 
     <title>Customer Registration</title>
     <script>
-        var pwd_expression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/;
+        var pwd_expression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/;//regex  for password
         var letters = /^[A-Za-z]+$/;
-        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;//regex for mobile number
         var phoneno = /^\d{10}$/;
         var flag = 0;
         //fname validation
@@ -178,7 +178,7 @@
         <a class="nav nav-item text-decoration-none text-muted" href="#" onclick="history.back();">
             <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
-        <form method="POST" action="add_cust.php" class="form-floating" name="myform">
+        <form method="POST" action="#" class="form-floating" name="myform">
             <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-person-plus me-2"></i>Sign Up</h2>
 
             <div class="form-floating mb-2">
@@ -224,13 +224,13 @@
             </div>
 
             <div class="form-floating mb-2">
-                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd" minlength="6" maxlength="8" required autocomplete="off">
+                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd"  required autocomplete="off">
                 <label for="pwd">Password</label>
 
             </div>
 
             <div class="form-floating mb-2">
-                <input type="password" class="form-control" id="cfpwd" placeholder="Confirm Password" name="cfpwd" minlength="6" maxlength="8" required autocomplete="off">
+                <input type="password" class="form-control" id="cfpwd" placeholder="Confirm Password" name="cfpwd" required autocomplete="off">
                 <label for="cfpwd">Confirm Password</label>
                 
             </div>
@@ -243,7 +243,7 @@
 
                 </div>
             </div>
-            <button class="w-100 btn btn-success mb-3" type="submit">Sign Up</button>
+            <button class="w-100 btn btn-success mb-3" type="submit" name="submit">Sign Up</button>
         </form>
     </div>
     <div class="container mt-4"></div>
@@ -259,3 +259,48 @@
 </body>
 
 </html>
+
+<?php 
+    if(isset($_POST['submit']))
+    {
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $cmob = $_POST['mob'];
+        $city = $_POST['city'];
+        $pincode = $_POST['pin'];
+        $username = $_POST['uname'];
+        $passwd = $_POST['pwd'];
+        $cpasswd = $_POST['cfpwd'];
+        $role = "user";
+        $status =0;
+        $pass_hash=password_hash($cpasswd,PASSWORD_DEFAULT);
+
+        $sqla = "SELECT uname from tbl_login where uname = '$username'";
+        $result5 = mysqli_query($con,$sqla);
+        $num1 = mysqli_num_rows($result5);
+
+        if($num1 == 0)
+        {
+            $reslt = "INSERT INTO tbl_login(uname,passwd,role,status) VALUES ('$username','$pass_hash','$role','$status')";
+            mysqli_query($con,$reslt);
+
+            $query5 = "SELECT * FROM tbl_login WHERE uname = '$username'";
+            $reslt1 = mysqli_query($con,$query5);
+            $row = mysqli_fetch_array($reslt1);
+            $usr = $row['login_id'];
+
+            $sqlc = "INSERT INTO tbl_customer(cust_fname,cust_lname,cust_email,cust_mob,cust_city,cust_pincode,cust_status,login_id) 
+                                      VALUES ('$firstname','$lastname','$email','$cmob','$city','$pincode','$status','$usr')";
+            mysqli_query($con,$sqlc);
+            // header('location:cust_login.php');
+            echo "<script>alert('Sucessfully registered') </script>";
+
+        }
+        else
+        {
+            echo "<script>alert('Username already exists') </script>";
+        }
+        ob_end_flush();
+    }
+?>

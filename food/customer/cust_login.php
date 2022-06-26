@@ -5,7 +5,6 @@
     <?php 
     include("conn.php"); 
     include("head.php"); 
-    include('../assets/includes/head.php');
     session_start();
     ?>
     <meta charset="UTF-8">

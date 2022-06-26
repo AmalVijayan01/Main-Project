@@ -6,10 +6,11 @@
     session_start();
     include("conn.php");
     include('head.php');
+    $cusid = $_SESSION["ses_id"];
     if (!isset($_SESSION["ses_id"])) {
         header("location: restricted.php");
         exit(1);
-        $cusid=$_SESSION["ses_id"];
+        
     }
     include("conn.php");
     include('head.php');
@@ -24,53 +25,65 @@
     <title>My Cart | SaiCafe</title>
     <style>
         .cartimg img {
-            height:100px;
-            width:100px;
+            height: 100px;
+            width: 100px;
         }
-        .carttbl{
+
+        .carttbl {
             display: flex;
             box-sizing: border-box;
             border-color: black;
             background-color: beige;
             width: 50%;
             height: 20%;
-            padding:10px 10px 10px 10px;
+            padding: 10px 10px 10px 10px;
             margin-bottom: 5px;
         }
-        .carttext{
+
+        .carttext {
             margin-left: 2%;
         }
-        .cartdiv{
+
+        .cartdiv {
             box-shadow: 2px;
             display: flex;
-            margin-right: 10%;;
+            margin-right: 10%;
+            ;
         }
-        .userdetail{
-           width: 50%;
-           float:right;
-           background-color:azure;
-           margin-left: 20%;
-           margin-top:-35%;
-           padding:5px 5px 10px 10px;
+
+        .userdetail {
+            width: 50%;
+            float: right;
+            background-color: azure;
+            margin-left: 20%;
+            margin-top: -15%;
+            padding: 5px 5px 10px 10px;
         }
-        .pickup{
+
+        .pickup {
             border-bottom: black 5px;
-            
+
         }
-        .pickup form label{
+
+        .pickup form label {
             width: 150px;
             display: inline-block;
         }
-        .pickup form input{
+
+        .pickup form input {
             margin-top: 15px;
         }
-        .pickup form button{
+
+        .pickup form button {
             width: 300px;
             display: inline-block;
         }
-        .pickup form input{
+
+        .pickup form input {
             width: 300px;
             display: inline-block;
+        }.cartcontainer{
+            height: 500px;
         }
     </style>
 </head>
@@ -88,41 +101,41 @@
                 </svg> My Cart
             </h2>
         </div>
+        
         <?php
-            $sqle="SELECT * FROM tbl_customer WHERE login_id ='". $_SESSION["ses_id"]."'";
-            $resc= mysqli_query($con,$sqle);
-            if($rese = mysqli_fetch_array($resc))
-            {
-                $cusid=$rese['cust_id'];       
-            }
-            $cartselect="SELECT * FROM tbl_foods,tbl_cart WHERE tbl_foods.food_id=tbl_cart.food_id AND tbl_cart.cust_id='$cusid'";
-            $cartres=mysqli_query($con,$cartselect);
-            while($cartres1 = mysqli_fetch_array($cartres))
-            {
-               $unitprice=$cartres1['food_unitprice'];
-               $cartno=$cartres1['cart_amount'];
-               $total=$unitprice*$cartno;
-            ?>
-            <div class="cartdiv">
-                <div class="carttbl">
-                    <div class="cartimg">
-                        <img src="<?php echo $cartres1['food_image']?>">
-                    </div>
-                    <div class="carttext">
-                    <h3><?php echo $cartres1['cart_amount']?>x&nbsp;<?php echo $cartres1['food_name']?></h3>
-                    <text><?php echo $total ?>&nbsp;(<?php echo $cartres1['food_unitprice']?>&nbsp;Rs. each)</text><br><br>
-                    <a href="cust_update_cart.php?<?php echo "fd_id=".$cartres1['food_id']."&cust_id=".$cartres1['cust_id'] ?>">Edit Item</a>
+        $sqle = "SELECT * FROM tbl_customer WHERE login_id ='$cusid'";
+        $resc = mysqli_query($con, $sqle);
+        if ($rese = mysqli_fetch_array($resc)) {
+            $cusid = $rese['cust_id'];
+        }
+        $cartselect = "SELECT * FROM tbl_foods,tbl_cart WHERE tbl_foods.food_id=tbl_cart.food_id AND tbl_cart.cust_id='$cusid'";
+        $cartres = mysqli_query($con, $cartselect);
+        while ($cartres1 = mysqli_fetch_array($cartres)) {
+            $unitprice = $cartres1['food_unitprice'];
+            $cartno = $cartres1['cart_amount'];
+            $total = $unitprice * $cartno;
+        ?>
+            <div class="cartcontainer">
+                <div class="cartdiv">
+                    <div class="carttbl">
+                        <div class="cartimg">
+                            <img src="<?php echo $cartres1['food_image'] ?>">
+                        </div>
+                        <div class="carttext">
+                            <h3><?php echo $cartres1['cart_amount'] ?>x&nbsp;<?php echo $cartres1['food_name'] ?></h3>
+                            <text><?php echo $total ?>&nbsp;(<?php echo $cartres1['food_unitprice'] ?>&nbsp;Rs. each)</text><br><br>
+                            <a href="cust_update_cart.php?<?php echo "fd_id=" . $cartres1['food_id'] . "&cust_id=" . $cartres1['cust_id'] ?>">Edit Item</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php 
-        }?>
-        <div class="userdetail">
+                <?php
+                } ?>
+                <div class="userdetail">
                     <div class="pickup">
                         <h4>Pickup Details</h4>
                         <form>
                             <label>Name:</label>&nbsp;<input type="text" name="delivery_name"><br>
-                            <label>Address:</label>&nbsp;<input type="text"   name="delivery_address"><br>
+                            <label>Address:</label>&nbsp;<input type="text" name="delivery_address"><br>
                             <label>Pincode:</label>&nbsp;<input type="text" name="delivery_address"><br>
                             <label>City:</label>&nbsp;<input type="text" name="delivery_address"><br>
                             <label>Mobile:</label>&nbsp;<input type="text" name="delivery_address"><br>
@@ -130,14 +143,15 @@
                         </form>
                     </div>
                 </div>
-        <footer class="text-center text-white">
-            <!-- Copyright -->
-            <div class="text-center p-2 p-2 mb-1 bg-dark text-white">
-                <p class="text-white">© 2022 Copyright : Home-Foodi</p>
-                <p class="text-white">Developed by :&nbsp; Amal Vijayan</p>
             </div>
-            <!-- Copyright -->
-        </footer>
+            <footer class="text-center text-white">
+                <!-- Copyright -->
+                <div class="text-center p-2 p-2 mb-1 bg-dark text-white">
+                    <p class="text-white">© 2022 Copyright : Home-Foodi</p>
+                    <p class="text-white">Developed by :&nbsp; Amal Vijayan</p>
+                </div>
+                <!-- Copyright -->
+            </footer>
 </body>
 
 <!-- Apply class to omise payment button -->

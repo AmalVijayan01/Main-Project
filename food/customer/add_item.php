@@ -12,14 +12,17 @@
     $cus_id = $_POST["cus_id"];
     $amount = $_POST["amount"];
     $request = $_POST["request"];
-    $status=0;
+    $status=0;  
+    
 
     $query = "SELECT * FROM tbl_cart WHERE cust_id = '$cus_id' GROUP BY cust_id";
     $result = mysqli_query($con,$query);
 
+    
+
     if($result -> num_rows == 0){
         //No item in cart
-        $insert_query = "INSERT INTO tbl_cart (food_id, cust_id, chef_id,cart_status,cart_amount, cart_note) 
+        $insert_query = "INSERT INTO tbl_cart(food_id, cust_id, chef_id,cart_status,cart_amount, cart_note) 
         VALUES ('$fd_id','$cus_id','$chef_id','$status','$amount','$request')";
         $atc_result = mysqli_query($con,$insert_query);
     }else{
@@ -46,8 +49,7 @@
             }
         }
         else{
-            //Different shop
-            //Delete all items in cart from previous shop
+
             $delelte_query = "DELETE FROM tbl_cart WHERE chef_id = '$chef_id'";
             $delete_result = mysqli_query($con,$delelte_query);
             if($delete_result){
@@ -61,10 +63,10 @@
         }
     }
     if($atc_result){
-        header("location: food_items.php?s_id={$s_id}&atc=1");
+        header("location: food_items.php?s_id={$cus_id}&atc=1");
         exit(1);
     }else{
-        header("location: food_items.php?s_id={$s_id}&atc=0");
+        header("location: food_items.php?s_id={$cus_id}&atc=0");
         exit(1);
     }
 ?>
