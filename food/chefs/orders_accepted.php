@@ -105,7 +105,11 @@ $login_id=$_SESSION["ses_id"];
                                 $food_select = mysqli_query($con,$select_food_query);
 
                                 while ($fetch_result = mysqli_fetch_array($food_select)) {
+<<<<<<< HEAD
                                     $imageurl = "images/foods/" . $fetch_result['food_image'];
+=======
+                                    $imageurl = "images/foods" . $fetch_result['food_image'];
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                 ?>
                                     <tr>
                                         <td><?php echo $fetch_result['order_id']; ?></td>
@@ -113,6 +117,7 @@ $login_id=$_SESSION["ses_id"];
                                         <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
                                         <td><?php echo $fetch_result['order_qty']; ?></td>
                                         <td><?php echo $fetch_result['order_date']; ?></td>
+<<<<<<< HEAD
                                         <td><?php echo $fetch_result['order_price']; ?></td>
                                         <td>
                                             <form method="post" action="#">
@@ -131,6 +136,17 @@ $login_id=$_SESSION["ses_id"];
                                         ?>
                                             </form>
                                             
+=======
+                                        <td> Chef <?php echo $fetch_result['order_price']; ?></td>
+                                        <td>
+                                            <form method="post" action="#">
+                                                <select class="custselect"> 
+                                                    <option value="processing">processing</option>
+                                                </select><br>
+                                                <input type="hidden" name="odrid" value="<?php echo $fetch_result['order_id'] ?>">
+                                                <input type="submit" name="submit" class="custombtn" value="Update">
+                                            </form>
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                         </td>
                                     </tr>
                                 <?php

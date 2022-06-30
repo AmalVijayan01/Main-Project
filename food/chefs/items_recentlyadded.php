@@ -88,12 +88,17 @@ $login_id=$_SESSION["ses_id"];
                                 $food_select = mysqli_query($con,$select_food_query);
 
                                 while ($fetch_result = mysqli_fetch_array($food_select)) {
+<<<<<<< HEAD
                                     $imageurl = "images/foods/" . $fetch_result['food_image'];
+=======
+                                    $imageurl = "foodimages/" . $fetch_result['food_image'];
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                 ?>
                                     <tr>
                                         <td><?php echo $fetch_result['food_name']; ?></td>
                                         <td><?php echo $fetch_result['food_description']; ?></td>
                                         <td><?php echo $fetch_result['cat_name']; ?></td>
+<<<<<<< HEAD
                                         <td><?php echo $fetch_result['food_qty']; ?></td>
                                         <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
                                         <td><?php echo $fetch_result['food_unitprice']; ?></td>
@@ -103,12 +108,28 @@ $login_id=$_SESSION["ses_id"];
                                                 echo "Enabled";
                                             } else {
                                                 echo "Suspended";
+=======
+                                        <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
+                                        <td><?php echo $fetch_result['food_unitprice']; ?></td>
+                                        <td> Chef <?php echo $fetch_result['chef_fname']; ?></td>
+                                        <td><?php
+
+                                            if ($fetch_result['food_status'] == 0) {
+                                                echo "Available";
+                                            } else {
+                                                echo "Not Available";
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                             }
                                             ?></td>
 
                                         <!-- <td><a href="update_menu.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a> -->
+<<<<<<< HEAD
                                         <td><a href="suspendfoods.php?id=<?php echo $fetch_result['food_id'] ?>" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10">Suspend</a>
                                             <a href="enablefood.php?hid=<?php echo $fetch_result['food_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Enable</a>
+=======
+                                        <td><a href="db/suspendfoods.php?id=<?php echo $fetch_result['food_id'] ?>" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10">Suspend</a>
+                                            <a href="db/enablefood.php?hid=<?php echo $fetch_result['food_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Enable</a>
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                         </td>
                                     </tr>
                                 <?php

@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 session_start();
 if (!isset($_SESSION["ses_id"])) {
     header("location: chef_login.php");
@@ -177,3 +178,13 @@ $login_id=$_SESSION["ses_id"];
 </body>
 
 </html>
+=======
+    session_start();
+    if(!isset($_SESSION["ses_id"])){
+        header("location: chef_login.php");
+        exit(1);
+    }
+    include 'sidebar.php';
+    include 'conn.php';
+?>
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127

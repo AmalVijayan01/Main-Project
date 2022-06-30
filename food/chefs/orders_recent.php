@@ -86,11 +86,19 @@ $login_id=$_SESSION["ses_id"];
                                                     tbl_orders.chef_id, tbl_orders.food_id,tbl_orders.order_status,
                                                     tbl_foods.food_name,tbl_foods.food_image FROM tbl_orders,
                                                     tbl_foods WHERE tbl_orders.food_id=tbl_foods.food_id AND 
+<<<<<<< HEAD
                                                     tbl_orders.chef_id='$chefid'" ;
                                 $food_select = mysqli_query($con,$select_food_query);
 
                                 while ($fetch_result = mysqli_fetch_array($food_select)) {
                                     $imageurl = "images/foods/" . $fetch_result['food_image'];
+=======
+                                                    tbl_orders.chef_id='$chefid'";
+                                $food_select = mysqli_query($con,$select_food_query);
+
+                                while ($fetch_result = mysqli_fetch_array($food_select)) {
+                                    $imageurl = "images/foods" . $fetch_result['food_image'];
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                 ?>
                                     <tr>
                                         <td><?php echo $fetch_result['order_id']; ?></td>
@@ -101,16 +109,27 @@ $login_id=$_SESSION["ses_id"];
                                         <td> Chef <?php echo $fetch_result['order_price']; ?></td>
                                         <td><?php
 
+<<<<<<< HEAD
                                             if ($fetch_result['order_status'] == 'accepted') {
                                                 echo "Accepted";
                                             } else {
                                                 echo "Not accepted";
+=======
+                                            if ($fetch_result['order_status'] == 0) {
+                                                echo "Available";
+                                            } else {
+                                                echo "Not Available";
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                             }
                                             ?></td>
 
                                         <!-- <td><a href="update_menu.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a> -->
                                         <td>
+<<<<<<< HEAD
                                             <a href="orders_view.php?hid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Accept</a>
+=======
+                                            <a href="db/enablefood.php?hid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">view details</a>
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                         </td>
                                     </tr>
                                 <?php

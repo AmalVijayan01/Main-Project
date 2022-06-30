@@ -55,12 +55,20 @@
             <p class="text-mute">New member? <a href="chef_signup.php">Sign up</a></p>
             <form action="#" method="post" class="signup-form" name=""myform>
                 <label for="" class="inp">
+<<<<<<< HEAD
                 <input type="text" class="input-text" placeholder="&nbsp;" name="uname" autocomplete="off" required>
+=======
+                <input type="text" class="input-text" placeholder="&nbsp;" name="uname">
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                 <span class="label">Username</span>
                 <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
                 </label>
                 <label for="" class="inp">
+<<<<<<< HEAD
                     <input type="password" class="input-text" placeholder="&nbsp;" name="passwd" autocomplete="off" required>
+=======
+                    <input type="password" class="input-text" placeholder="&nbsp;" name="passwd">
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                     <span class="label">Password</span>
                     <span class="input-icon"><i class="fa-solid fa-address-card"></i></span>
                 </label>

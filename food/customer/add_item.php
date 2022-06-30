@@ -50,7 +50,11 @@
         }
         else{
 
+<<<<<<< HEAD
             $delelte_query = "DELETE FROM tbl_cart WHERE cust_id = '$cust_id'";
+=======
+            $delelte_query = "DELETE FROM tbl_cart WHERE chef_id = '$chef_id'";
+>>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
             $delete_result = mysqli_query($con,$delelte_query);
             if($delete_result){
                 //Insert new item to cart of other chef
