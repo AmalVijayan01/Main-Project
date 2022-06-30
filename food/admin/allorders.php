@@ -204,7 +204,6 @@
                                                 <th>Dishes</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
-                                                <th>Address</th>
                                                 <th>Status</th>
                                                 <th>Ordered Date</th>
                                             </tr>
@@ -221,7 +220,6 @@
                                             <td><?php echo $res3['food_name']?></td>
                                             <td><?php echo $res3['order_qty']?></td>
                                             <td><?php echo $res3['order_price']?></td>
-                                            <td><?php echo $res3['cust_addr']?></td>
                                             <td><?php echo $res3['order_status']?></td>
                                             <td><?php echo $res3['order_date']?></td>
                                             <!-- <td>

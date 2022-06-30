@@ -42,11 +42,7 @@
         </div>
         <div class="row row-cols-1 row-cols-md-2 mb-5">
             <div class="col mb-3 mb-md-0">
-                <img 
-                    <?php
-                        if(is_null($food_row["food_image"])){echo "src='img/default.png'";}
-                        else{echo "src=\"foodimgs/{$food_row['food_image']}\"";}
-                    ?> 
+                <img src="../chefs/images/foods/<?php echo $food_row["food_image"]?>"   
                     class="img-fluid rounded-25 float-start" 
                     alt="<?php echo $food_row["food_name"]?>">
             </div>

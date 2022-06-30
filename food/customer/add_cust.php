@@ -29,12 +29,11 @@
             // header('location:login.php');
             
         }else{
-            ?>
-            <script>
-                alert('Your username is already taken!');
+
+               echo alert('Your username is already taken!');
                 history.back();
             </script>
-            <?php 
+
         }
         $result -> free_result();
         

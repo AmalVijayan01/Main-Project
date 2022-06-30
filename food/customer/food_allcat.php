@@ -13,7 +13,30 @@
         include('navbar.php');
     ?>
     
-
+    <style>
+    .displaycard{
+        background-color:white;
+        box-shadow: 1px 1px 1px 1px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }.displaycard img{
+        width:100%; 
+        height:150px; 
+        object-fit:cover;
+    }.displaycard img:hover{
+        transform:scale(1.1)
+    }.displaycard h3{
+        margin-top:5px;
+    }.custom-link{
+        padding:5px 15px 5px 10px;
+        background-color: #26dad1;
+        text-align: center;
+        border-radius:3px;
+        color: white;
+    }.custom-link:hover{
+        box-shadow: 1px 1px 1px 1px;
+    }
+</style> 
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -21,6 +44,10 @@
         $query = "SELECT * FROM tbl_category";
         $result = mysqli_query($con,$query);
         $shop_row = $result -> fetch_array();
+
+        $query2 = "SELECT cust_id FROM tbl_customer WHERE login_id=$_SESSION[ses_id]";
+        $result3 = mysqli_query($con,$query2);
+        $shop_row1 = $result3 -> fetch_array();
     ?>
     <div class="container px-5 py-4" id="shop-body">
         <a class="nav nav-item text-decoration-none text-muted mb-3" href="#" onclick="history.back();">
@@ -68,31 +95,26 @@
             $result = mysqli_query($con,$query);
             if($result ->num_rows > 0){
                 while($food_row = $result->fetch_array()){
-                    $imgurl = "foodimgs/".$food_row['cat_image'];
         ?>
-            <!-- GRID EACH MENU -->
-            <div class="col">
-                <div class="card rounded-25 mb-4">
-                    
-                        <div class="card-img-top">
-                            <img src="<?php echo $imgurl ?>"
-                                style="width:100%; height:150px; object-fit:cover;"
-                                class="img-fluid" alt="<?php echo $food_row["cat_name"]?>">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text"><?php echo $food_row["cat_descri"]?></p> 
-                            <a href="food_bycat.php?<?php echo "f_id=".$food_row["cat_id"]?>" class="btn btn-sm mt-3 btn-outline-secondary">
-                              Browse in <?php echo $food_row["cat_name"]?> foods
+        <div class="fddisplay">
+                    <div class="displaycard">
+                        <div class="displaytext">
+                        <img src= "../chefs/images/chef_imgs/" alt="<?php echo $food_row["cat_name"]?>">
+                            <h3><?php echo $food_row["cat_name"]?></h3>
+                            <h5><?php echo $food_row["cat_descri"]?></h5>
+                            <a href="food_bycat.php?<?php echo "f_id=".$food_row["cat_id"]?>" class="custom-link">
+                              <?php echo $food_row["cat_name"]?> foods
+                            </a>
                             </a>
                         </div>
-                    </a>
+                    </div>
+                    
                 </div>
-            </div>
             <?php
                     }   
                 }
             ?>
-            <!-- END GRID EACH SHOPS -->
+        </div>
 
         </div>
         <!-- END GRID SHOPS SELECTION -->

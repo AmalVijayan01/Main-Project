@@ -13,7 +13,29 @@
         include('navbar.php');
     ?>
     
-
+<style>
+    .displaycard{
+        background-color:white;
+        box-shadow: 1px 1px 1px 1px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }.displaycard img{
+        width: 225px;
+        height: 200px;
+    }.displaycard img:hover{
+        transform:scale(1.1)
+    }.displaycard h3{
+        margin-top:5px;
+    }.custom-link{
+        padding:5px 10px 5px 10px;
+        background-color: #26dad1;
+        text-align: center;
+        border-radius:3px;
+        color: white;
+    }.custom-link:hover{
+        box-shadow: 1px 1px 1px 1px;
+    }
+</style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -73,37 +95,27 @@
             $result = mysqli_query($con,$query);
             if($result ->num_rows > 0){
                 while($food_row = $result->fetch_array()){
-                    $imgurl = "foodimgs/".$food_row['food_image'];
-        ?>
-            <!-- GRID EACH MENU -->
-            <div class="col">
-                <div class="card rounded-25 mb-4">
                     
-                        <div class="card-img-top">
-                            <img src="<?php echo $imgurl ?>"
-                                style="width:100%; height:150px; object-fit:cover;"
-                                class="img-fluid" alt="<?php echo $food_row["food_name"]?>">
+        ?>
+            <div class="fddisplay">
+                    <div class="displaycard">
+                        <div class="displaytext">
+                        <img src= "../chefs/images/foods/<?php echo $food_row["food_image"]?>">
+                            <h3><?php echo $food_row["food_name"]?></h3>
+                            <h5><?php echo $food_row["food_description"]?></h5>
+                            <p>₹<?php echo $food_row["food_unitprice"]?></p>
+                            <p><?php echo $food_row['food_qty'];?>&nbsp;<?php if($food_row['food_status']==0)
+                            {
+                                echo "Instock";
+                            }else{
+                                echo "out of stock";
+                            }
+                                ?></p>
+                             <a href="food_item.php?<?php echo "f_id=".$food_row["food_id"]."&c_id=".$food_row["chef_id"]."&cus_id=".$shop_row1["cust_id"]?>" class="custom-link">View details</a>   
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title fs-5"><?php echo $food_row["food_name"]?></h5>
-                            <p class="card-text"><?php echo $food_row["food_description"]?></p>
-                            <p class="card-text"><?php echo $food_row["food_unitprice"]?> Rs. </p>
-                            <a href="food_item.php?<?php echo "f_id=".$food_row["food_id"]."&c_id=".$food_row["chef_id"]."&cus_id=".$shop_row1["cust_id"]?>" class="btn btn-sm mt-3 btn-outline-secondary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-cart-plus" viewBox="0 0 16 16">
-                                    <path
-                                        d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
-                                    <path
-                                        d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 
-                                        0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.
-                                        621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 
-                                        0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                </svg> Add to cart 
-                            </a>
-                        </div>
-                    </a>
+                    </div>
+                    
                 </div>
-            </div>
             <?php
                     }   
                 }

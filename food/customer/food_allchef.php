@@ -12,7 +12,30 @@
         include('head.php');
         include('navbar.php');
     ?>
-    
+  <style>
+    .displaycard{
+        background-color:white;
+        box-shadow: 1px 1px 1px 1px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }.displaycard img{
+        width:100%; 
+        height:150px; 
+        object-fit:cover;
+    }.displaycard img:hover{
+        transform:scale(1.1)
+    }.displaycard h3{
+        margin-top:5px;
+    }.custom-link{
+        padding:5px 10px 5px 10px;
+        background-color: #26dad1;
+        text-align: center;
+        border-radius:3px;
+        color: white;
+    }.custom-link:hover{
+        box-shadow: 1px 1px 1px 1px;
+    }
+</style>  
 
 </head>
 
@@ -68,33 +91,24 @@
             $result = mysqli_query($con,$query);
             if($result ->num_rows > 0){
                 while($food_row = $result->fetch_array()){
-                    $imgurl = "foodimgs/".$food_row['chef_photo'];
         ?>
-            <!-- GRID EACH MENU -->
-            <div class="col">
-                <div class="card rounded-25 mb-4">
-                    
-                        <div class="card-img-top">
-                            <img src="<?php echo $imgurl ?>"
-                                style="width:100%; height:150px; object-fit:cover;"
-                                class="img-fluid" alt="<?php echo $food_row["chef_fname"]?>">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Name:<?php echo $food_row["chef_fname"]?></p>
-                            <p class="card-text">Place :<?php echo $food_row["chef_city"]?></p> 
-                            <a href="food_bychef.php?<?php echo "f_id=".$food_row["chef_id"]?>" class="btn btn-sm mt-3 btn-outline-secondary">
+        <div class="fddisplay">
+                    <div class="displaycard">
+                        <div class="displaytext">
+                        <img src= "../chefs/images/chef_imgs/<?php echo $food_row["chef_photo"]?>">
+                            <h3>Name:<?php echo $food_row["chef_fname"]?></h3>
+                            <h5>Place :<?php echo $food_row["chef_city"]?></h5>
+                             <a href="food_bychef.php?<?php echo "f_id=".$food_row["chef_id"]?>" class="custom-link">
                               Browse in <?php echo $food_row["chef_fname"]?>'s foods
                             </a>
                         </div>
-                    </a>
+                    </div>
+                    
                 </div>
-            </div>
             <?php
                     }   
                 }
             ?>
-            <!-- END GRID EACH SHOPS -->
-
         </div>
         <!-- END GRID SHOPS SELECTION -->
 

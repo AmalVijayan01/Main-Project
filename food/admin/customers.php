@@ -235,7 +235,8 @@ include 'db/connection.php';
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Address</th>
+                                                <th>city</th>
+                                                <th>Pincode</th>
                                                 <th>Email</th>
                                                 <th>Mobile</th>
                                                 <th>Status</th>
@@ -253,7 +254,8 @@ include 'db/connection.php';
                                             ?>
                                                 <tr>
                                                     <td><?php echo $result['cust_fname']; ?>&nbsp;<?php echo $result['cust_lname']; ?></td>
-                                                    <td><?php echo $result['cust_addr']; ?></td>
+                                                    <td><?php echo $result['cust_city']; ?></td>
+                                                    <td><?php echo $result['cust_pincode']; ?></td>
                                                     <td><?php echo $result['cust_email']; ?></td>
                                                     <td><?php echo $result['cust_mob']; ?></td>
                                                     <td><?php

@@ -250,7 +250,8 @@ include 'db/connection.php'
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Address</th>
+                                                <th>City</th>
+                                                <th>Pincode</th>
                                                 <th>Email</th>
                                                 <th>Mobile</th>
                                                 <th>Image</th>
@@ -269,7 +270,8 @@ include 'db/connection.php'
                                             ?>
                                                 <tr>
                                                     <td><?php echo $result['chef_fname']; ?>&nbsp;<?php echo $result['chef_lname']; ?></td>
-                                                    <td><?php echo $result['chef_addr']; ?></td>
+                                                    <td><?php echo $result['chef_city']; ?></td>
+                                                    <td><?php echo $result['chef_pincode']; ?></td>
                                                     <td><?php echo $result['chef_email']; ?></td>
                                                     <td><?php echo $result['chef_mob']; ?></td>
                                                     <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>

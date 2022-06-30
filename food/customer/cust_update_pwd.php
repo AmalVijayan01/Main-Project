@@ -17,20 +17,16 @@
             $oldpwd = $_POST["old_pwd"];
             $newpwd = $_POST["new_pwd"];
             $newcfpwd = $_POST["new_cfpwd"];
-            if($newpwd != $newcfpwd){
-                ?>
-                    <script>
-                        alert('Your new password is not match.\nPlease re-enter again.');
-                        history.back();
-                    </script>;
-                <?php
-                exit(1);
-            }else{
+
+        
                 $query = "SELECT passwd FROM tbl_login WHERE login_id = $ses_id";
                 $result = mysqli_query($con,$query);
                 $row = $result -> fetch_array();
-                if($oldpwd == $row["passwd"]){
-                    $query = "UPDATE tbl_login SET passwd = '$newpwd' WHERE login_id = $ses_id";
+                $verify=password_verify($oldpwd,$row["passwd"]);
+                
+                if($verify == 1){
+                    $pass_hash=password_hash($newpwd,PASSWORD_DEFAULT);
+                    $query = "UPDATE tbl_login SET passwd = '$pass_hash' WHERE login_id = $ses_id";
                     $result = mysqli_query($con,$query);
                     if($result){
                         header("location: cust_profile.php?up_pwd=1");
@@ -47,7 +43,6 @@
                     exit(1);
                 }
             }
-        }
     ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
