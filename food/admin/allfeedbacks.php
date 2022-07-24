@@ -222,13 +222,13 @@ include 'db/connection.php';
                                     </thead>
                                     <tbody style="text-align: center">
                                         <?php
-                                        $myqry4 = "SELECT tbl_feedback.feedback_date,tbl_feedback.feedback_id,tbl_login.uname from tbl_feedback,tbl_login where tbl_feedback.login_id=tbl_login.login_id";
+                                        $myqry4 = "SELECT tbf.feedback_id,tbf.message,tbf.rating,tbf.order_id,tbf.feedback_date,tbf.cust_id,tbc.cust_fname,tbc.cust_lname FROM tbl_feedback tbf ,tbl_customer tbc WHERE tbf.cust_id=tbc.cust_id;";
                                         $myres4 = mysqli_query($con, $myqry4);
                                         while ($res4 = mysqli_fetch_array($myres4)) {
 
                                         ?>
                                             <tr>
-                                                <td style="text-align: center"><?php echo $res4['uname'] ?></td>
+                                                <td style="text-align: center"><?php echo $res4['cust_fname']?> &nbsp; <?php echo $res4['cust_lname']?></td>
                                                 <td style="text-align: center"><?php echo $res4['feedback_date'] ?></td>
                                                 <td style="text-align: center"><a href="feedback.php?fid=<?php echo $res4['feedback_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a>
 

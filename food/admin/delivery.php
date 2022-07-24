@@ -219,35 +219,41 @@ include 'db/connection.php';
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Chef Name</th>
-                                                <th>Item Details</th>
+                                                <th>Order id</th>
+                                                <th>Delivery Details</th>
                                                 <th>Address</th>
-                                                <th>Ordered Date</th>
+                                                <th>Mobile</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $myqry4="select tbl_delivery.*,tbl_chefs.chef_fname,tbl_foods.*,tbl_orders.* from tbl_chefs,tbl_foods,tbl_orders,tbl_delivery where tbl_orders.chef_id=tbl_chefs.chef_id";
+                                                $myqry4="SELECT `del_id`, `del_name`, `del_addr`, `del_pin`, `del_city`, `del_mob`, `order_id`, `del_status`, `cust_id` FROM `tbl_delivery`";
                                                 $myres4=mysqli_query($con,$myqry4);
                                                 while($res4=mysqli_fetch_array($myres4))
                                                 {
                                             ?>
-                                            <td><?php echo $res4['chef_fname']?></td>
+                                            <td><?php echo $res4['order_id']?></td>
                                             <td>
                                                 <div class="fdimg">
                                                     
                                                     <div class="fddetail">
-                                                        <label>Name:</label><?php echo $res4['food_name']?><br>
-                                                        <label>Price:</label><?php echo $res4['food_unitprice']?>
+                                                        <label>Name:</label><?php echo $res4['del_name']?>
+                                                        <br><label>City:</label><?php echo $res4['del_addr']?>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td><?php echo $res4['del_addr']?></td>
-                                            <td><?php echo $res4['order_date']?></td>
+                                            <td><?php echo $res4['del_mob']?></td>
+                                            <td><?php  
+                                            
+                                            $stat=$res4['del_status'];
+                                            if($stat==0){
+                                                echo "Delivered";
+                                            }
+                                                ?></td>
                                                 <?php
-                                                    $stat=$res4['order_status'];
+                                                    $stat=$res4['del_status'];
                                                     if($stat=="ordered"){
                                                 ?>
                                                 <td> <button type="button" class="btn btn-info" style="font-weight:bold;"><span class="fa fa-bars"  aria-hidden="true" >Just ordered</button></td>             
@@ -277,10 +283,10 @@ include 'db/connection.php';
                                                      <td> <button type="button" class="btn btn-danger"> <i class="fa fa-close"></i>Cancelled</button></td>
                                                  <?php
                                                 }?>
-                                                 <td> 
+                                                 <!-- <td> 
                                                  <a href="contactchef.php?fid=<?php echo $res4['del_id'] ?>"  class="btn btn-danger btn-flat btn-addon btn-xs m-b-10">Contact Chef</a><br>
                                                 <a href="contactagent.php?pid=<?php echo $res4['del_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Contact Agent</a>
-                                            </td>
+                                            </td> -->
                                             </tr>
                                             <?php 
                                                 }

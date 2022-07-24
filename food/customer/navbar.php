@@ -21,93 +21,97 @@
 </head>
 <style>
     .pageheader {
-    background-color: white;
-    height: 8%;
-    box-shadow: 0px 0px 1px 0px;
-    padding-bottom: 5%;
-}
+        background-color: white;
+        height: 8%;
+        box-shadow: 0px 0px 1px 0px;
+        padding-bottom: 5%;
+    }
 
-.navitems {
-    margin: 1% 5% 0% 30%;
-    float: right;
-}
+    .navitems {
+        margin: 1% 5% 0% 30%;
+        float: right;
+    }
 
-.navitems ul {
-    text-align: center;
-    text-decoration: none;
-    list-style: none;
-}
+    .navitems ul {
+        text-align: center;
+        text-decoration: none;
+        list-style: none;
+    }
 
-.navitems ul li {
-    display: inline-block;
-    padding-right: 20px;
-    font-size: 18px;
-}
+    .navitems ul li {
+        display: inline-block;
+        padding-right: 20px;
+        font-size: 18px;
+    }
 
-li a,
-.dropbtn {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
+    li a,
+    .dropbtn {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 
-li a:hover,
-.dropdown:hover .dropbtn {
-    background-color: burlywood;
+    li a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: burlywood;
 
-}
+    }
 
-li.dropdown {
-    display: inline-block;
-}
+    li.dropdown {
+        display: inline-block;
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    z-index: 1;
-    margin-top:2%
-}
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        z-index: 1;
+        margin-top: 2%
+    }
 
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
 
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-.pagelogo{
-            float:  left;
-            text-align: center;
-            position: relative;
-            width: 40%;
-            margin-left: -20%;
-            padding-right: 20px;
-        }
-        .pagelogo img{
-            width: 100px;
-            position: absolute;
-        }
-        .pagelogo h3{
-            font-weight: bold;
-            font-size: x-large;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            text-align: content;
-            position: absolute;
-            margin-left: 62%;
-            margin-top:3%;
-        }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .pagelogo {
+        float: left;
+        text-align: center;
+        position: relative;
+        width: 40%;
+        margin-left: -20%;
+        padding-right: 20px;
+    }
+
+    .pagelogo img {
+        width: 100px;
+        position: absolute;
+    }
+
+    .pagelogo h3 {
+        font-weight: bold;
+        font-size: x-large;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        text-align: content;
+        position: absolute;
+        margin-left: 62%;
+        margin-top: 3%;
+    }
 </style>
+
 <body class="fix-header">
     <!-- Preloader - style you can find in spinners.css -->
     <div class="pageheader">
-    <div class="pagelogo">
+        <div class="pagelogo">
             <img src="../assets/includes/img/home-foodi-logo.png"></img>
             <h3>Home-Foodi</h3>
         </div>
@@ -136,4 +140,5 @@ li.dropdown {
         </div>
     </div>
 </body>
+
 </html>

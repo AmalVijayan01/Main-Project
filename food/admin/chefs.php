@@ -266,7 +266,6 @@ include 'db/connection.php'
                                             // $Selectquery = "SELECT * FROM customers";
                                             $res = mysqli_query($con, $Selectquery);
                                             while ($result = mysqli_fetch_array($res)) {
-                                            $imageurl = "userimages/" . $result['chef_photo'];
                                             ?>
                                                 <tr>
                                                     <td><?php echo $result['chef_fname']; ?>&nbsp;<?php echo $result['chef_lname']; ?></td>
@@ -274,7 +273,7 @@ include 'db/connection.php'
                                                     <td><?php echo $result['chef_pincode']; ?></td>
                                                     <td><?php echo $result['chef_email']; ?></td>
                                                     <td><?php echo $result['chef_mob']; ?></td>
-                                                    <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
+                                                    <td><img style="width:100px; height:100px;" src="../chefs/images/chef_imgs/<?php echo $result['chef_photo']?>"></td>
                                                     <td><?php
                                                         if ($result['status'] == 0) {
                                                             echo "active";

@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 session_start();
 if (!isset($_SESSION["ses_id"])) {
     header("location: chef_login.php");
@@ -38,22 +37,6 @@ $login_id=$_SESSION["ses_id"];
         border-right: none;
         border-left: none;
         border-color: blue;
-    }.custombtn1{
-        margin-top: 3px;
-        padding: 10px 20px 10px 20px;
-        background-color:blue;
-        color: white;
-        border: none;
-        border-radius:10px;
-    }.custombtn:hover{
-        color: greenyellow;
-    }.custselect{
-        border: none;
-        border-bottom: 1px;
-        width: 200px;
-        height: 30px;
-        margin-bottom: 5px;
-        border-radius:10px;
     }
 </style>
 </head>
@@ -82,44 +65,49 @@ $login_id=$_SESSION["ses_id"];
                             <thead>
                                 <tr>
                                     <th>Order id</th>
-                                    <th>Food name</th>
-                                    <th>Food image</th>
+                                    <th>Quantity</th>
                                     <th>Ordered date</th>
-                                    <th>Ordered by</th>
-                                    <th>Delivered to</th>
-                                    <th>View details</th>
+                                    <th>Amount</th>
+                                    <th>Agent details</th>
+                                    <th>Delivery status</th>
+                                    <th>Delivered date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php
-                                    $chef_select="SELECT chef_id FROM tbl_chefs WHERE login_id='$login_id'";
-                                    $chef_result=mysqli_query($con,$chef_select);
-                                    $chef_fetch=mysqli_fetch_array($chef_result);
-                                    $chefid=$chef_fetch['chef_id'];
+                                $chef_select="SELECT chef_id FROM tbl_chefs WHERE login_id='$login_id'";
+                                $chef_result=mysqli_query($con,$chef_select);
+                                $chef_fetch=mysqli_fetch_array($chef_result);
+                                $chefid=$chef_fetch['chef_id'];
 
-                                    $select_recent = "SELECT tbl_delivery.del_id, tbl_delivery.del_name,tbl_delivery.del_addr,
-                                    tbl_delivery.del_pin,tbl_delivery.del_city,tbl_delivery.del_mob, tbl_delivery.order_id,
-                                    tbl_delivery.del_status,tbl_agents.agent_fname,tbl_agents.agent_lname,
-                                    tbl_customer.cust_id,tbl_customer.cust_fname,tbl_customer.cust_lname,tbl_orders.order_id,
-                                    tbl_orders.cust_id,tbl_foods.food_name,tbl_foods.food_id,tbl_foods.food_image,tbl_orders.order_date FROM tbl_delivery,tbl_agents,
-                                    tbl_orders,tbl_customer,tbl_foods WHERE 
-                                    tbl_delivery.del_status=0 AND tbl_delivery.order_id=tbl_orders.order_id AND tbl_orders.
-                                    cust_id=tbl_customer.cust_id AND tbl_orders.food_id=tbl_foods.food_id AND 
-                                    tbl_orders.chef_id='$chefid'";
-                                    $recent_result = mysqli_query($con, $select_recent);
-                                    while ($recent_fetch = mysqli_fetch_array($recent_result)) {
-                                        echo $recent_fetch['food_name'];
-                                        $imageurl = "images/foods/" . $recent_fetch['food_image'];
+                                $ordid="SELECT order_id FROM tbl_placeorder WHERE chef_id='$chefid'";
+                                $ordid_result=mysqli_query($con,$ordid);
+                                $fetched_ordrid=mysqli_fetch_array($ordid_result);
+                                $crnt_orderid=$fetched_ordrid['order_id'];
+
+                                $select_food_query = "SELECT tbo.order_id,tbo.order_date,tbo.order_qty,
+                                tbo.order_price,tbo.cust_id,tbo.order_status FROM tbl_orders tbo 
+                                WHERE tbo.order_id='$crnt_orderid' AND tbo.order_status!='ordered'
+                                ORDER BY order_date ASC ";
+                                $food_select = mysqli_query($con,$select_food_query);
+
+                                while ($fetch_result = mysqli_fetch_array($food_select)) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $recent_fetch['order_id']; ?></td>
-                                        <td><?php echo $recent_fetch['food_name']; ?></td>
-                                        <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
-                                        <td><?php echo $recent_fetch['order_date']; ?></td>
-                                        <td><?php echo $recent_fetch['cust_fname']. $recent_fetch['cust_lname']; ?></td>
-                                        <td><?php echo $recent_fetch['del_name']; ?></td>
-                                        <td><a href="orderdetails.php?id=<?php echo $recent_fetch['del_id']?>"  class="custombtn1">View</a></td>
+                                        <td><?php echo $fetch_result['order_id']; ?></td>
+                                        <td><?php echo $fetch_result['order_qty']; ?></td>
+                                        <td><?php echo $fetch_result['order_date']; ?></td>
+                                        <td><?php echo $fetch_result['order_price']; ?></td>
+                                        <td><?php echo $fetch_result['order_price']; ?></td>
+                                        <td><?php echo $fetch_result['order_price']; ?></td>
+                                        <td><?php echo $fetch_result['order_status']; ?></td>
+
+                                        <!-- <td><a href="update_menu.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a> -->
+                                        <td>
+                                            <a href="feedbacks.php?oid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View Feedbacks</a>
+                                        </td>
                                     </tr>
                                 <?php
 
@@ -178,13 +166,3 @@ $login_id=$_SESSION["ses_id"];
 </body>
 
 </html>
-=======
-    session_start();
-    if(!isset($_SESSION["ses_id"])){
-        header("location: chef_login.php");
-        exit(1);
-    }
-    include 'sidebar.php';
-    include 'conn.php';
-?>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127

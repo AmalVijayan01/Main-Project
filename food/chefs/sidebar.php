@@ -113,13 +113,8 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="items_all.php">All items</a></li>
                                 <li><a href="items_byme.php">My items</a></li>
-<<<<<<< HEAD
                                 <!-- <li><a href="items_instock.php">In stock</a></li>
                                 <li><a href="items_outofstock.php">Out of stock</a></li> -->
-=======
-                                <li><a href="items_instock.php">In stock</a></li>
-                                <li><a href="items_outofstock.php">Out of stock</a></li>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                             </ul>
                         </li>
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Add Items</span></a>
@@ -141,7 +136,6 @@
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Delivery</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="del_recent.php">Recently Deliverd</a></li>
-<<<<<<< HEAD
                                 <!-- <li><a href="del_ongoing.php">On going Delivery</a></li>
                                 <li><a href="del_pending.php">Pending Delivery</a></li> -->
                                 <li><a href="del_agents.php">Delivery Agents</a></li>
@@ -154,31 +148,14 @@
                                 <li><a href="reports_deli.php">Delivery reports</a></li> 
                             </ul>
                         </li> -->
-=======
-                                <li><a href="del_ongoing.php">On going Delivery</a></li>
-                                <li><a href="del_pending.php">Pending Delivery</a></li>
-                                <li><a href="del_agents.php">Delivery Agents</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Messages</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="feedbacks.php">Feedbacks</a></li>
-                                <li><a href="complaints.php">Complaints</a></li>
-                                <li><a href="reports_deli.php">Delivery reports</a></li>
-                            </ul>
-                        </li>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Payments</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="payment_details.php">Payment details</a></li>
                                 <li><a href="payment_pending.php">Pending Payments</a></li>
                             </ul>
                         </li>
-<<<<<<< HEAD
                         <li> <a class="has-arrow " href="logout.php" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Logout</span></a>
                         </li>
-=======
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

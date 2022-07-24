@@ -210,9 +210,12 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $myqry3="select tbl_orders.*,tbl_customer.*,tbl_foods.food_name from tbl_orders,tbl_customer,tbl_foods where tbl_orders.cust_id=tbl_customer.cust_id and tbl_orders.food_id=tbl_foods.food_id";
+                                            $myqry3="SELECT tbl_orders.*,tbl_customer.*,tbl_placeorder.*,
+                                            tbl_foods.food_name FROM tbl_orders,tbl_customer,tbl_foods,
+                                            tbl_placeorder WHERE tbl_orders.cust_id=tbl_customer.cust_id 
+                                            AND tbl_orders.order_id=tbl_placeorder.order_id AND 
+                                            tbl_placeorder.food_id=tbl_foods.food_id";
                                             $myres3=mysqli_query($con,$myqry3);
-
                                             while($res3=mysqli_fetch_array($myres3))
                                             {
                                             ?>
@@ -222,16 +225,6 @@
                                             <td><?php echo $res3['order_price']?></td>
                                             <td><?php echo $res3['order_status']?></td>
                                             <td><?php echo $res3['order_date']?></td>
-                                            <!-- <td>
-                                                <button type="button" class="btn btn-info" style="font-weight:bold;"><span class="fa fa-bars" aria-hidden="true">Dispatch</button>
-                                            </td> -->
-                                            <!-- <td> <button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin" aria-hidden="true"></span>On the Way!</button></td> -->
-                                            <!-- <td> <button type="button" class="btn btn-success"><span class="fa fa-check-circle" aria-hidden="true">Delivered</button></td>
-                                        <td> <button type="button" class="btn btn-danger"> <i class="fa fa-close"></i>Cancelled</button></td> -->
-                                            <!-- <td>
-                                                <a href="delete_orders.php" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>
-                                                <a href="view_order.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="ti-settings"></i></a>
-                                            </td> -->
                                             </tr>
                                             <?php
                                         }

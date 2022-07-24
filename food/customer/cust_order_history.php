@@ -22,9 +22,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style/main.css" rel="stylesheet">
+    <!-- <link href="style/main.css" rel="stylesheet"> -->
     <link href="style/menu.css" rel="stylesheet">
-    <title>My Cart | SaiCafe</title>
+    <title>My Cart | Home-Foodie</title>
     <style>
         .cartimg img {
             height: 100px;
@@ -91,7 +91,7 @@
             <!-- ONGOING ORDERS TAB -->
             <div class="tab-pane fade show active p-3" id="nav-ongoing" role="tabpanel" aria-labelledby="ongoing-tab">
                 <?php 
-                $ongoing_orders_select = "SELECT * FROM tbl_orders WHERE cust_id = '$custid' AND order_status !='delivered'";
+                $ongoing_orders_select = "SELECT * FROM tbl_orders WHERE cust_id = '$custid'";
                 $ongoing_result = mysqli_query($con,$ongoing_orders_select);
                 $ongoing_num = mysqli_num_rows($ongoing_result);
                 $result=mysqli_fetch_array($ongoing_result);
@@ -99,10 +99,10 @@
                 if($ongoing_num>0){
             ?>
                 <div class="row row-cols-1 row-cols-md-3">
-                    <!-- START EACH ORDERS DETAIL -->
+                    <!-- order detail starts -->
                     <?php while($og_row = $ongoing_result -> fetch_array()){ ?>
                     <div class="col">
-                        <a href="cust_order_detail.php?orh_id=<?php echo $og_row["order_id"]?>"
+                        <a href="cust_order_invoice.php?orh_id=<?php echo $og_row["order_id"]?>"
                             class="text-dark text-decoration-none">
                             <div class="card mb-3">
                                 <?php if($og_row["order_status"]=="accepted"){ ?>
@@ -113,9 +113,9 @@
                                 <div class="card-header bg-warning justify-content-between">
                                     <small class="me-auto d-flex" style="font-weight: 500;">Preparing order</small>
                                 </div>
-                                <?php }else if($og_row["order_status"]=="outfordel"){?>
+                                <?php }else if($og_row["order_status"]=="dispatched"){?>
                                 <div class="card-header bg-primary text-white justify-content-between">
-                                    <small class="me-auto d-flex" style="font-weight: 500;">Ready to pickup</small>
+                                    <small class="me-auto d-flex" style="font-weight: 500;">Order dispatched</small>
                                 </div>
                                 <?php }else{?>
                                 <div class="card-header bg-success text-white justify-content-between">
@@ -134,14 +134,14 @@
                                         ?>
                                         </div>
                                         <?php 
-                                        $ord_query = "SELECT * FROM tbl_orders WHERE order_id = '{$og_row['order_id']}'";
+                                        $ord_query = "SELECT * FROM tbl_orders WHERE order_id = '{$og_row['order_id']}' ";
                                         $ord_arr = mysqli_query($con,$ord_query) -> fetch_array();
                                     ?>
                                         <div class="col pt-2 border-top"><?php echo $ord_arr["order_qty"]?> item(s)</div>
                                         <div class="col mt-1 mb-2"><strong class="h5"><?php echo $ord_arr["order_price"]?>
                                                 Rs.</strong></div>
                                         <div class="col text-end">
-                                            <a href="cust_order_detail.php?orh_id=<?php echo $og_row["order_id"]?>"
+                                            <a href="cust_order_invoice.php?orh_id=<?php echo $og_row["order_id"]?>"
                                                 class="text-dark text-decoration-none">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-arrow-right-square"
@@ -180,31 +180,20 @@
             <!-- COMPLETED ORDERS TAB -->
             <div class="tab-pane fade p-3" id="nav-completed" role="tabpanel" aria-labelledby="completed-tab">
             <?php 
-                $ongoing_query = "SELECT * FROM tbl_delivery WHERE order_id = 1 AND del_status=0";
+                $odr_id=$result["order_id"];
+                $ongoing_query = "SELECT * FROM tbl_orders WHERE cust_id = '$custid' AND order_status='delivered' ORDER BY order_id DESC";
                 $ongoing_result = mysqli_query($con,$ongoing_query);
                 $ongoing_num = mysqli_num_rows($ongoing_result);
                 if($ongoing_num>0){
             ?>
                 <div class="row row-cols-1 row-cols-md-3">
-                    <!-- START EACH ORDERS DETAIL -->
+                    <!-- each order details -->
                     <?php while($og_row = $ongoing_result -> fetch_array()){ ?>
                     <div class="col">
-                        <a href="cust_order_detail.php?orh_id=<?php echo $og_row["order_id"]?>"
+                        <a href="cust_order_invoice.php?orh_id=<?php echo $og_row["order_id"]?>"
                             class="text-dark text-decoration-none">
                             <div class="card mb-3">
-                                <?php if($og_row["del_status"]=="0"){ ?>
-                                <div class="card-header bg-info text-dark justify-content-between">
-                                    <small class="me-auto d-flex" style="font-weight: 500;">Dispatched your order</small>
-                                </div>
-                                <?php }else if($og_row["del_status"]=="1"){?>
-                                <div class="card-header bg-warning justify-content-between">
-                                    <small class="me-auto d-flex" style="font-weight: 500;">Item recieved at delivery</small>
-                                </div>
-                                <?php }else if($og_row["del_status"]=="2"){?>
-                                <div class="card-header bg-primary text-white justify-content-between">
-                                    <small class="me-auto d-flex" style="font-weight: 500;">Out for delivery</small>
-                                </div>
-                                <?php }else{?>
+                                <?php if($og_row["order_status"]=="delivered"){ ?>
                                 <div class="card-header bg-success text-white justify-content-between">
                                     <small class="me-auto d-flex" style="font-weight: 500;">Delivered</small>
                                 </div>
@@ -229,7 +218,7 @@
                                         <div class="col mt-1 mb-2"><strong class="h5"><?php echo $ord_arr["order_price"]?>
                                                 Rs.</strong></div>
                                         <div class="col text-end">
-                                            <a href="cust_order_detail.php?orh_id=<?php echo $og_row["order_id"]?>"
+                                            <a href="cust_order_invoice.php?orh_id=<?php echo $og_row["order_id"]?>"
                                                 class="text-dark text-decoration-none">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-arrow-right-square"

@@ -93,7 +93,6 @@ include 'conn.php';
         }.inp-fields1{
             margin-right: 5px;
             width:44.5% ;
-<<<<<<< HEAD
         }.errname{
             color:red;
             margin-top: -5px;
@@ -109,14 +108,11 @@ include 'conn.php';
         }.errcat{
             color:red;
             margin-top: -5px;
-=======
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
         }
     </style>
 
     <script>
         function validate() {
-<<<<<<< HEAD
             var fdname=document.myform.fdname.value;
             var desc=document.myform.descrip.value;
             var fdqty=document.myform.fdqty.value;
@@ -139,14 +135,6 @@ include 'conn.php';
 
             }
             return true;
-=======
-            if(document.myform.fdname.value ==""){
-                alert("Please enter");
-                return false;
-            }else{
-                return true;
-            }
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
         }
     </script>
 </head>
@@ -160,35 +148,22 @@ include 'conn.php';
                     <h2>Add New Item</h2>
                 </div>
                 <div class="adfd-form-container">
-<<<<<<< HEAD
                     <form method="post" action="#" name="myform"onsubmit="return( validate())" enctype="multipart/form-data">
-=======
-                    <form method="post" action="#" name="myform">
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                         <label>Item Name</label><br>
-                        <input type="text" name="fdname" class="inp-fields" placeholder="Enter food name"  
+                        <input type="text" name="fdname" id="fdname" class="inp-fields" placeholder="Enter food name"  
                         autocomplete="off"><br><br>
                         <label>Description</label><br>
-<<<<<<< HEAD
                         <input type="text" name="descrip" id="descrip" class="inp-fields" placeholder="Enter description"   
                         autocomplete="off"><br><br>
                         <div class="mydiv">
-                            <input type="number" name="fdqty" class="inp-fields1" placeholder="Enter quantity"
+                            <input type="number" name="fdqty" id="fdqty" class="inp-fields1" placeholder="Enter quantity"
                             min="1" max="50"  autocomplete="off"><br><br>
                             <div class="errnum" id="errnum"></div>
-=======
-                        <textarea name="description" cols="" rows="3" placeholder="Enter description"   
-                        autocomplete="off"></textarea><br><br>
-                        <div class="mydiv">
-                            
-                            <input type="number" name="fdqty" class="inp-fields1" placeholder="Enter quantity"
-                            min="1" max="50"  autocomplete="off"><br><br>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
-                            <input type="text" name="fdprice" class="inp-fields1" placeholder="Enter unit price"  
+                            <input type="text" name="fdprice" id="fdprice" class="inp-fields1" placeholder="Enter unit price"  
                             autocomplete="off"><br><br>
                         </div>
                         <label>Category</label><br>
-                        <select name="fdcategory" class="inp-fields"  class="inp-fields" >
+                        <select name="fdcategory" id="fdcategory" class="inp-fields"  class="inp-fields" >
                         <?php
                             $category_select="SELECT cat_id,cat_name,cat_status FROM tbl_category WHERE cat_status=0";
                             $category_result=mysqli_query($con,$category_select);
@@ -202,37 +177,16 @@ include 'conn.php';
                         </select><br><br>
                         <div class="imginput">
                             <label>Image</label><br>
-<<<<<<< HEAD
-                            <input type="file" name="uploadfile"><br><br>
+                            <input type="file" name="uploadfile" id="uploadfile" ><br><br>
                         </div>
                         
                         <div class="errname" id="errname"></div>
                         <div class="btns">
                             <input type="submit" name="submit"  value="Add"
-=======
-                            <input type="file" name="fdimg"><br><br>
-                        </div>
-                        <div class="error" id="error"></div>
-                        <div class="btns">
-                            <input type="submit" name="submit" onsubmit="return validate()" value="Add"
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
-                             class="custom-btns">
+                             class="custom-btns" id="submit" >
                             <button class="custom-btns1" onclick="">Cancel</button>
                         </div> 
                     </form>
-<<<<<<< HEAD
-                    <?php  
-
-                            $filename=$_FILES["uploadfile"]["name"];
-                            $tempfile=$_FILES["uploadfile"]["tmp_name"];
-                            $folder="images/foods/".$filename;
-
-
-
-
-                        ?>
-=======
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                 </div>
             </div>
         </div>
@@ -244,16 +198,11 @@ include 'conn.php';
 <?php
     if(isset($_POST['submit'])){
         $foodname = $_POST['fdname'];
-<<<<<<< HEAD
         $fooddescription = $_POST['descrip'];
-=======
-        $fooddescription = $_POST['description'];
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
         $quantity = $_POST['fdqty'];
         $price= $_POST['fdprice'];
         $login_id=$_SESSION["ses_id"];
         $cat_id=$catid;
-<<<<<<< HEAD
         // $image = $_POST['fdimg'];
         $food_status=0;
         $preorder_status=0;
@@ -262,12 +211,6 @@ include 'conn.php';
         // $tempfile=$_FILES["fdimg"]["tmp_name"];
         // $folder="/images/foods/".$filename;
 
-=======
-        $image = $_POST['fdimg'];
-        $food_status=0;
-        $preorder_status=0;
-
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
         $select_chefid="SELECT chef_id FROM tbl_chefs WHERE login_id='$login_id'";
         $chefid_result=mysqli_query($con,$select_chefid);
         $result_chefid=mysqli_fetch_array($chefid_result);
@@ -275,16 +218,10 @@ include 'conn.php';
 
         $insert_foods="INSERT INTO tbl_foods(`food_name`, `food_description`, `food_qty`, 
         `food_unitprice`, `food_image`, `chef_id`, `cat_id`, `food_status`, `preorder_status`) 
-<<<<<<< HEAD
         VALUES ('$foodname','$fooddescription','$quantity','$price','$filename','$chef_id',
         '$cat_id','$food_status','$preorder_status')";
         $insert_foods_result=mysqli_query($con,$insert_foods);
         move_uploaded_file($tempfile,$folder);
-=======
-        VALUES ('$foodname','$fooddescription','$quantity','$price','$image','$chef_id',
-        '$cat_id','$food_status','$preorder_status')";
-        $insert_foods_result=mysqli_query($con,$insert_foods);
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
     
     }
 ?>

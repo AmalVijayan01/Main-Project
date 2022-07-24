@@ -208,6 +208,10 @@
                                                 <label class="control-label">Category Description</label>
                                                 <input type="textarea"  placeholder="Category Description"  name="cdes" class="form-control" autocomplete="off" required>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Category image</label>
+                                                <input type="file" name="cimg" class="form-control" autocomplete="off" required>
+                                            </div>
                                         </div>
                                         <!--/span-->
 
@@ -308,6 +312,9 @@
     $catname = $_POST['cname'];
     $catdes = $_POST['cdes'];
     $status = 0;
+    $filename=$_FILES["cimg"] ["name"];
+    $tempfile=$_FILES["cimg"]["tmp_name"];
+    $folder="regimg/".$filename;
     $myqry6="SELECT cat_name FROM tbl_category where cat_name='$catname'";
     $myres6=mysqli_query($con,$myqry6);
     $num=mysqli_fetch_array($myres6);
@@ -317,8 +324,9 @@
     
     } else{
         
-        $sql="INSERT INTO  tbl_category(cat_name,cat_descri,cat_status) VALUES ('$catname','$catdes','$status')";
+        $sql="INSERT INTO  tbl_category(cat_name,cat_image,cat_descri,cat_status) VALUES ('$catname','$filename','$catdes','$status')";
     mysqli_query($con,$sql);
+    move_uploaded_file($tempfile,$folder);
     }
     header("Location:categories.php");
   }

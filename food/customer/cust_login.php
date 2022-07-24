@@ -34,7 +34,7 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd" required autocomplete="off">
                 <label for="floatingPassword">Password</label>
             </div>
-            <button class="w-100 btn btn-success mb-3" type="submit">Log In</button>
+            <button class="w-100 btn btn-success mb-3" id="login" type="submit">Log In</button>
             <!-- <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="shop/shop_login.php">
                 <i class="bi bi-shop me-2"></i>Log in to your shop account
             </a> -->

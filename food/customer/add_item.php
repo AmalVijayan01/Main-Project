@@ -1,6 +1,5 @@
 <?php
     include('conn.php');
-
     session_start();
         if(!isset($_SESSION["ses_id"])){
             header("location: restricted.php");
@@ -11,60 +10,52 @@
     $chef_id = $_POST["chef_id"];
     $cus_id = $_POST["cus_id"];
     $amount = $_POST["amount"];
-    $request = $_POST["request"];
     $status=0;  
     
 
     $query = "SELECT * FROM tbl_cart WHERE cust_id = '$cus_id' GROUP BY cust_id";
     $result = mysqli_query($con,$query);
-
+    $result_arr = $result -> fetch_array();
+    $incart_food = $result_arr["food_id"];
+    $incart_chef = $result_arr["chef_id"];
     
-
     if($result -> num_rows == 0){
-        //No item in cart
+        //No item in cart,insert into cart
         $insert_query = "INSERT INTO tbl_cart(food_id, cust_id, chef_id,cart_status,cart_amount, cart_note) 
         VALUES ('$fd_id','$cus_id','$chef_id','$status','$amount','$request')";
         $atc_result = mysqli_query($con,$insert_query);
-    }else{
-        //Already have item in cart
-        $result_arr = $result -> fetch_array();
-        $incart_chef = $result_arr["chef_id"];
-        if($incart_chef == $chef_id){
-            //Same chef
-            $cartsearch = "SELECT cart_amount FROM tbl_cart WHERE cust_id = '$cus_id' AND food_id = '$fd_id' AND chef_id='$chef_id'";
-            $cartsearch_result = mysqli_query($con,$cartsearch);
-            $cartsearch_row = $cartsearch_result -> num_rows;
-            if($cartsearch_row == 0){
-                //No this item in cart yet
-                $insert_query = "INSERT INTO tbl_cart (food_id, Cust_id, chef_id,cart_status,cart_amount,cart_note) 
+    }
+    else
+    {
+        if($chef_id==$incart_chef)//Already have items of same chef in cart 
+        {
+            $chef_item=mysqli_query($con,"SELECT * FROM tbl_cart WHERE chef_id = '$chef_id' AND food_id='$fd_id'");
+            $chef_item_result=mysqli_num_rows($chef_item);
+            if($chef_item_result==0)
+            {
+                $insert_query = "INSERT INTO tbl_cart(food_id, cust_id, chef_id,cart_status,cart_amount, cart_note) 
+                VALUES ('$fd_id','$cus_id','$chef_id','$status','$amount','$request')";
+                $atc_result = mysqli_query($con,$insert_query);//insert into cart if same chef
+            }
+            else
+            {
+                $update_query = "UPDATE tbl_cart SET cart_amount='$amount' WHERE food_id='$fd_id'";
+                $atc_result = mysqli_query($con,$update_query);//same chef update
+            }
+        }
+        else
+        {
+            $delete_query="DELETE FROM tbl_cart WHERE cust_id='$cus_id'";//different chef->delete all items of current chef
+            $delete_result = mysqli_query($con,$delete_query);
+            if($delete_result)//insert items of new chef
+            {
+                $insert_query = "INSERT INTO tbl_cart(food_id, cust_id, chef_id,cart_status,cart_amount, cart_note) 
                 VALUES ('$fd_id','$cus_id','$chef_id','$status','$amount','$request')";
                 $atc_result = mysqli_query($con,$insert_query);
             }else{
-                //Already have item in cart with same chef
-                $cartsearch_arr = $cartsearch_result -> fetch_array();
-                $incart_amount = $cartsearch_arr["cart_amount"];
-                $new_amount = $incart_amount + $amount;
-                $update_query = "UPDATE tbl_cart SET cart_amount = '$new_amount' WHERE cust_id = '$cus_id' AND food_id = '$fd_id' AND chef_id = '$chef_id'";
-                $atc_result = mysqli_query($con,$update_query);
-            }
-        }
-        else{
-
-<<<<<<< HEAD
-            $delelte_query = "DELETE FROM tbl_cart WHERE cust_id = '$cust_id'";
-=======
-            $delelte_query = "DELETE FROM tbl_cart WHERE chef_id = '$chef_id'";
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
-            $delete_result = mysqli_query($con,$delelte_query);
-            if($delete_result){
-                //Insert new item to cart of other chef
-                $insert_query = "INSERT INTO tbl_cart (food_id, Cust_id, chef_id,cart_status,cart_amount,cart_note) 
-                VALUES ('$fd_id','$cus_id','$chef_id','$status','$amount','$request')";
-                $atc_result =mysqli_query($con,$insert_query);
-            }else{
                 $atc_result = false;
             }
-        }
+        }        
     }
     if($atc_result){
         header("location: food_items.php?s_id={$cus_id}&atc=1");

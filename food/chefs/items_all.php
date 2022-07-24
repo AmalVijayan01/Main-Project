@@ -78,11 +78,7 @@ include 'conn.php';
                 $select_result=mysqli_query($con,$select_query);
                 while($fetc_rows = mysqli_fetch_array($select_result))
                 {
-<<<<<<< HEAD
                     $imageurl="images/foods/".$fetc_rows['food_image'];
-=======
-                    $imageurl="images/".$fetc_rows['food_image'];
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
             ?>
                 <div class="fddisplay">
                     <div class="displaycard">

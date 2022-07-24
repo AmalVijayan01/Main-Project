@@ -183,24 +183,8 @@ include 'db/connection.php'
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Messages</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="allfeedbacks.php">Feedbacks</a></li>
-                                <!-- <li><a href="allcomplaints.php">Complaints</a></li>
-                                <li><a href="deliveryreport.php">Delivery reports</a></li> -->
                             </ul>
                         </li>
-                        <!-- <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-archive f-s-20 color-warning"></i><span class="hide-menu">Payments</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="payments.php">Payment details</a></li>
-                                <li><a href="pendingpayments.php">Pending Payments</a></li>
-                            </ul>
-                        </li> -->
-                        <!-- <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-shopping-cart"
-                                    aria-hidden="true"></i><span class="hide-menu">Orders</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="all_orders.php">All Orders</a></li>
-
-                            </ul>
-                        </li> -->
-
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -231,20 +215,6 @@ include 'db/connection.php'
 
                                 <div class="table-responsive m-t-40">
                                 <div class="fdopr">
-                                        <!-- <div class="fdsort">
-                                            <select name="fdsort">
-                                                <option value="">Name ascending</option>
-                                                <option value="">Name descending</option>
-                                                <option value="">Date joined ascending</option>
-                                                <option value="">Date joined descending</option>
-                                                <option value="">Suspended agents</option>
-                                                <option value="">Active agents</option>
-                                            </select>
-                                        </div> -->
-                                        <!-- <div class="fdsearch">
-                                            <input type="search" placeholder="search agents..." >
-                                            
-                                        </div> -->
                                     </div>
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>

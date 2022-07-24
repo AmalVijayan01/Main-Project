@@ -19,10 +19,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css" rel="stylesheet">
     <link href="style/menu.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="js/input_number.js"></script>
     <script type="text/javascript">
     </script>
     <title>Food Item | Home-Foodi</title>
+    <style>
+        .rating span {
+            color: #fea500;
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -43,7 +49,7 @@
         <div class="row row-cols-1 row-cols-md-2 mb-5">
             <div class="col mb-3 mb-md-0">
                 <img src="../chefs/images/foods/<?php echo $food_row["food_image"]?>"   
-                    class="img-fluid rounded-25 float-start" 
+                class="img-fluid rounded-25 float-start" 
                     alt="<?php echo $food_row["food_name"]?>">
             </div>
             <div class="col text-wrap">
@@ -52,18 +58,60 @@
                 <h3 class="fw-light"><?php echo $food_row["food_unitprice"]?> Rs.</h3>
                 <ul class="list-unstyled mb-3 mb-md-0">
                     <li class="my-2">
-                        <?php if($food_row["food_status"]==0){ ?>
+                        <?php if($food_row["food_status"]==0 && $food_row["food_qty"] !=0){ ?>
                         <span class="badge rounded-pill bg-success">Available</span>
                         <?php }else{ ?>
                         <span class="badge rounded-pill bg-danger">Out of Order</span>
-                        <?php }
-                            if($food_row["preorder_status"]==0){?>
-                        <span class="badge rounded-pill bg-success">Pre-order available</span>
-                        <?php }else{ ?>
-                        <span class="badge rounded-pill bg-danger">Pre-order Unavailable</span>
                         <?php }?>
                     </li>
                 </ul>
+               <div class="rating">
+                <?php 
+                $rating="SELECT tbf.rating,tbpo.food_id FROM tbl_feedback tbf,tbl_placeorder 
+                tbpo,tbl_foods tbfd WHERE tbf.order_id=tbpo.order_id AND tbpo.food_id=tbfd.food_id 
+                AND tbfd.food_id='$fd_id'";
+                $rating_result=mysqli_query($con,$rating);
+                $fetch=mysqli_num_rows($rating_result);
+                if($fetch>0){
+                    $fetched=mysqli_fetch_array($rating_result);
+                    $rvalue=$fetched['rating'];
+                    if($rvalue==1){
+                       ?> <span class="fa fa-star checked"></span><?php
+                    }
+                    else if($rvalue==2){
+                        ?> 
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <?php
+                    }
+                    else if($rvalue==3){
+                        ?> 
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <?php
+                    }else if($rvalue==4){
+                        ?> 
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <?php
+                    }else if($rvalue==5){
+                        ?> 
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <?php
+                    }
+                }else{
+                    echo"No rating yet";
+                }
+                
+                ?>
+               </div>
                 <div class="form-amount">
                     <form class="mt-3" method="POST" action="add_item.php">
                         <div class="input-group mb-3">
@@ -79,13 +127,6 @@
                         <input type="hidden" name="chef_id" value="<?php echo $chef_id?>">
                         <input type="hidden" name="fd_id" value="<?php echo $fd_id?>">
                         <input type="hidden" name="cus_id" value="<?php echo $cus_id?>">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="addrequest" name="request" placeholder=" ">
-                            <label for="addrequest" class="d-inline-text">Additional Request (Optional)</label>
-                            <div id="addrequest_helptext" class="form-text">
-                                Such as no veggie.
-                            </div>
-                        </div>
                         <button class="btn btn-success w-100" type="submit" title="add to cart" name="addtocart"
  >
                             <svg xmlns='http://www.w3.org/2000/svg\\' width='16' height='16' fill='currentColor'

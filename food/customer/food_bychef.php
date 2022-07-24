@@ -89,7 +89,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mb-1">
 
         <?php
-            $query = "SELECT * FROM tbl_foods WHERE food_status=0 AND chef_id='$cid'";
+            $query = "SELECT * FROM tbl_foods WHERE food_status=0 AND chef_id='$cid' AND food_qty>0";
             $result = mysqli_query($con,$query);
             if($result ->num_rows > 0){
                 while($food_row = $result->fetch_array()){

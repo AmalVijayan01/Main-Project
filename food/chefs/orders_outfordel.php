@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 session_start();
 if (!isset($_SESSION["ses_id"])) {
     header("location: chef_login.php");
@@ -38,22 +37,6 @@ $login_id=$_SESSION["ses_id"];
         border-right: none;
         border-left: none;
         border-color: blue;
-    }.custombtn{
-        margin-top: 3px;
-        width: 200px;
-        background-color:blue;
-        color: white;
-        border: none;
-        border-radius:10px;
-    }.custombtn:hover{
-        color: greenyellow;
-    }.custselect{
-        border: none;
-        border-bottom: 1px;
-        width: 200px;
-        height: 30px;
-        margin-bottom: 5px;
-        border-radius:10px;
     }
 </style>
 </head>
@@ -82,12 +65,11 @@ $login_id=$_SESSION["ses_id"];
                             <thead>
                                 <tr>
                                     <th>Order id</th>
-                                    <th>Food name</th>
-                                    <th>Food image</th>
                                     <th>Quantity</th>
                                     <th>Ordered date</th>
                                     <th>Amount</th>
-                                    <th>Update status</th>
+                                    <th>Order status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,25 +79,49 @@ $login_id=$_SESSION["ses_id"];
                                 $chef_result=mysqli_query($con,$chef_select);
                                 $chef_fetch=mysqli_fetch_array($chef_result);
                                 $chefid=$chef_fetch['chef_id'];
-                                $select_food_query = "SELECT tbl_orders.order_id,tbl_orders.order_date,
-                                                    tbl_orders.order_qty,tbl_orders.order_price,tbl_orders.cust_id,
-                                                    tbl_orders.chef_id, tbl_orders.food_id,tbl_orders.order_status,
-                                                    tbl_foods.food_name,tbl_foods.food_image FROM tbl_orders,
-                                                    tbl_foods WHERE tbl_orders.food_id=tbl_foods.food_id AND 
-                                                    tbl_orders.chef_id='$chefid' AND tbl_orders.order_status='outfordel'";
+
+                                $ordid="SELECT order_id FROM tbl_placeorder WHERE chef_id='$chefid'";
+                                $ordid_result=mysqli_query($con,$ordid);
+                                $fetched_ordrid=mysqli_fetch_array($ordid_result);
+                                $crnt_orderid=$fetched_ordrid['order_id'];
+
+                                $select_food_query = "SELECT tbo.order_id,tbo.order_date,tbo.order_qty,
+                                tbo.order_price,tbo.cust_id,tbo.order_status FROM tbl_orders tbo 
+                                WHERE tbo.chef_id='$chefid' AND tbo.order_status IN('readytodispatch','dispatched')
+                                ORDER BY order_date ASC ";
                                 $food_select = mysqli_query($con,$select_food_query);
 
                                 while ($fetch_result = mysqli_fetch_array($food_select)) {
-                                    $imageurl = "images/foods/" . $fetch_result['food_image'];
+                                    $odr_id=$fetch_result['order_id'];
                                 ?>
                                     <tr>
                                         <td><?php echo $fetch_result['order_id']; ?></td>
-                                        <td><?php echo $fetch_result['food_name']; ?></td>
-                                        <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
                                         <td><?php echo $fetch_result['order_qty']; ?></td>
                                         <td><?php echo $fetch_result['order_date']; ?></td>
-                                        <td> Chef <?php echo $fetch_result['order_price']; ?></td>
-                                        <td>Waiting for pick up</td>
+                                        <td><?php echo $fetch_result['order_price']; ?></td>
+                                        <td><?php echo $fetch_result['order_status']; ?></td>
+
+                                        <!-- <td><a href="update_menu.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a> -->
+                                        <td>
+                                        <?php 
+                                                $stat_select="SELECT order_status FROM tbl_orders WHERE order_id='$odr_id'";
+                                                $stat_result=mysqli_query($con,$stat_select);
+                                                $stat_fetc=mysqli_fetch_array($stat_result);
+                                                $stat=$stat_fetc['order_status'];
+
+                                                if($stat=='readytodispatch')
+                                                {
+                                            ?>
+                                            <a href="assign_delivery.php?<?php echo "did=".$odr_id ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Dispatch</a>
+                                            <?php
+                                                }
+                                                else if($stat=='dispatched'){
+                                                   ?>
+                                                        <text class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Already dispatched</text>
+                                                   <?php
+                                                }
+                                                ?>
+                                        </td>
                                     </tr>
                                 <?php
 
@@ -174,13 +180,3 @@ $login_id=$_SESSION["ses_id"];
 </body>
 
 </html>
-=======
-    session_start();
-    if(!isset($_SESSION["ses_id"])){
-        header("location: chef_login.php");
-        exit(1);
-    }
-    include 'sidebar.php';
-    include 'conn.php';
-?>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127

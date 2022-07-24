@@ -65,8 +65,6 @@ $login_id=$_SESSION["ses_id"];
                             <thead>
                                 <tr>
                                     <th>Order id</th>
-                                    <th>Food name</th>
-                                    <th>Food image</th>
                                     <th>Quantity</th>
                                     <th>Ordered date</th>
                                     <th>Amount</th>
@@ -81,55 +79,29 @@ $login_id=$_SESSION["ses_id"];
                                 $chef_result=mysqli_query($con,$chef_select);
                                 $chef_fetch=mysqli_fetch_array($chef_result);
                                 $chefid=$chef_fetch['chef_id'];
-                                $select_food_query = "SELECT tbl_orders.order_id,tbl_orders.order_date,
-                                                    tbl_orders.order_qty,tbl_orders.order_price,tbl_orders.cust_id,
-                                                    tbl_orders.chef_id, tbl_orders.food_id,tbl_orders.order_status,
-                                                    tbl_foods.food_name,tbl_foods.food_image FROM tbl_orders,
-                                                    tbl_foods WHERE tbl_orders.food_id=tbl_foods.food_id AND 
-<<<<<<< HEAD
-                                                    tbl_orders.chef_id='$chefid'" ;
+
+                                $ordid="SELECT order_id FROM tbl_placeorder WHERE chef_id='$chefid'";
+                                $ordid_result=mysqli_query($con,$ordid);
+                                $fetched_ordrid=mysqli_fetch_array($ordid_result);
+                                $crnt_orderid=$fetched_ordrid['order_id'];
+
+                                $select_food_query = "SELECT tbo.order_id,tbo.order_date,tbo.order_qty,
+                                tbo.order_price,tbo.cust_id,tbo.order_status FROM tbl_orders tbo 
+                                WHERE tbo.chef_id='$chefid' AND tbo.order_status!='delivered' GROUP BY tbo.order_id DESC ";
                                 $food_select = mysqli_query($con,$select_food_query);
 
                                 while ($fetch_result = mysqli_fetch_array($food_select)) {
-                                    $imageurl = "images/foods/" . $fetch_result['food_image'];
-=======
-                                                    tbl_orders.chef_id='$chefid'";
-                                $food_select = mysqli_query($con,$select_food_query);
-
-                                while ($fetch_result = mysqli_fetch_array($food_select)) {
-                                    $imageurl = "images/foods" . $fetch_result['food_image'];
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                                 ?>
                                     <tr>
                                         <td><?php echo $fetch_result['order_id']; ?></td>
-                                        <td><?php echo $fetch_result['food_name']; ?></td>
-                                        <td><img style="width:100px; height:100px;" src="<?php echo $imageurl ?>"></td>
                                         <td><?php echo $fetch_result['order_qty']; ?></td>
                                         <td><?php echo $fetch_result['order_date']; ?></td>
-                                        <td> Chef <?php echo $fetch_result['order_price']; ?></td>
-                                        <td><?php
-
-<<<<<<< HEAD
-                                            if ($fetch_result['order_status'] == 'accepted') {
-                                                echo "Accepted";
-                                            } else {
-                                                echo "Not accepted";
-=======
-                                            if ($fetch_result['order_status'] == 0) {
-                                                echo "Available";
-                                            } else {
-                                                echo "Not Available";
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
-                                            }
-                                            ?></td>
+                                        <td><?php echo $fetch_result['order_price']; ?></td>
+                                        <td><?php echo $fetch_result['order_status']; ?></td>
 
                                         <!-- <td><a href="update_menu.php" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View</a> -->
                                         <td>
-<<<<<<< HEAD
-                                            <a href="orders_view.php?hid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">Accept</a>
-=======
-                                            <a href="db/enablefood.php?hid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">view details</a>
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
+                                            <a href="orders_view.php?oid=<?php echo $fetch_result['order_id'] ?>" class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5">View details</a>
                                         </td>
                                     </tr>
                                 <?php

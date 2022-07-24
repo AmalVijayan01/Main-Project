@@ -4,30 +4,41 @@
       $username = $_POST["uname"];
       $pwd = $_POST["passwd"];
 
-      $query = "SELECT login_id,uname,passwd FROM tbl_login WHERE
-      uname = '$username' and status in('1','0') and role in('chef');";
+      $query = "SELECT `login_id`,`uname`,`passwd`,`role`,`status` FROM tbl_login WHERE
+      uname = '$username' and status in('1','0') and role in('chef','user');";
       $result =mysqli_query($con,$query);
-      if(mysqli_num_rows($result)>0){
-          $rowfetch=mysqli_fetch_assoc($result);
-          $verifypass=password_verify($pwd,$rowfetch['passwd']);
-          if($verifypass==1){
-              session_start();
-              $_SESSION["ses_id"] = $rowfetch['login_id'];
-              header("location:chef_dashboard.php");
-              exit(1);
-          }
-          else
-          {
-          ?>
-          <script>alert("invalid password")</script>
+      $num_rows=mysqli_num_rows($result);
+      if($num_rows>0){
+        $rowfetch=mysqli_fetch_array($result);
+        $role=$rowfetch['role'];
+        $stat=$rowfetch['status'];
+        $verifypass=password_verify($pwd,$rowfetch['passwd']);
+        if($verifypass==1)
+        {
+          if($stat==0 && $role=='chef'){
+            session_start();
+            $_SESSION["ses_id"] = $rowfetch['login_id'];
+            header("location:chef_dashboard.php");
+          }else if($stat==0 && $role=='user'){
+            session_start();
+            $_SESSION["ses_id"] = $rowfetch['login_id'];
+            header("location:../customer/dashboard.php");
+          }else{
+            ?>
+            <script>alert("You have been temporarly blocked by admin")</script>
           <?php
-              header("location:chef_login.php");
           }
+        }else{
+          ?>
+            <script>alert("Invalid credentials")</script>
+          <?php
+          header("location:chef_login.php");
+        }
+      }else{
+        header("location:chef_login.php");
       }
-      else
-      {
-          echo "<script>alert('Invalid credentials')</script>";
-      }
+    }else{
+      
     }
 ?>
 
@@ -55,24 +66,16 @@
             <p class="text-mute">New member? <a href="chef_signup.php">Sign up</a></p>
             <form action="#" method="post" class="signup-form" name=""myform>
                 <label for="" class="inp">
-<<<<<<< HEAD
                 <input type="text" class="input-text" placeholder="&nbsp;" name="uname" autocomplete="off" required>
-=======
-                <input type="text" class="input-text" placeholder="&nbsp;" name="uname">
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                 <span class="label">Username</span>
                 <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
                 </label>
                 <label for="" class="inp">
-<<<<<<< HEAD
                     <input type="password" class="input-text" placeholder="&nbsp;" name="passwd" autocomplete="off" required>
-=======
-                    <input type="password" class="input-text" placeholder="&nbsp;" name="passwd">
->>>>>>> e937fb11643b7fff3d41a5b4399541e176c9e127
                     <span class="label">Password</span>
                     <span class="input-icon"><i class="fa-solid fa-address-card"></i></span>
                 </label>
-                <a href="#" onclick="">Forgot your password?</a>
+                <a href="forgot_password.php" onclick="">Forgot your password?</a>
                 <input type="submit" name="submit" value="Login" class="btn btn-signup">
             </form>
             

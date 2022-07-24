@@ -40,7 +40,9 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        $query = "SELECT * FROM tbl_foods WHERE food_status=0";
+        $query = "SELECT `food_id`, `food_name`, `food_description`, `food_qty`, `food_unitprice`, 
+        `food_image`, `chef_id`, `cat_id`, `food_status`, `preorder_status` FROM `tbl_foods` WHERE 
+        food_qty>0 AND food_status=0";
         $result = mysqli_query($con,$query);
         $shop_row = $result -> fetch_array();
 
@@ -91,7 +93,9 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mb-1">
 
         <?php
-            $query = "SELECT * FROM tbl_foods WHERE food_status=0";
+            $query = "SELECT `food_id`, `food_name`, `food_description`, `food_qty`, `food_unitprice`, 
+            `food_image`, `chef_id`, `cat_id`, `food_status`, `preorder_status` FROM `tbl_foods` WHERE 
+            food_qty>0 AND food_status=0";
             $result = mysqli_query($con,$query);
             if($result ->num_rows > 0){
                 while($food_row = $result->fetch_array()){
